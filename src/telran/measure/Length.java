@@ -1,52 +1,55 @@
 package telran.measure;
 
-public class Length implements Comparable<Length> {
-	private float amount;
-	private LengthUnit unit;
-	private LengthUnit[] units = LengthUnit.values();
-
+public class Length implements Comparable<Length>{
+	private final float amount;
+	private final LengthUnit unit;
+	
 	public Length(float amount, LengthUnit unit) {
 		this.amount = amount;
-		for(LengthUnit un : units) {
-			if (unit.name() == un.name()) {
-				this.unit = unit;
-			}
-		}		
-	}	
-	@Override
-	public boolean equals(Object un) {		
-		if(this == un) {
-			return true;
-		}
-		Length conv = ((Length) un).convert(unit);		
-		int comp = Float.compare(amount, conv.amount);
-	
-		return comp == 0 ? true : false;
+		this.unit = unit;
 	}
-	
-	public String toString() {
-		return Float.toString(amount) + unit.name();
-		
+
+	@Override
+	/**
+	 * equals two Length objects according to LengthUnit
+	 * 10m == 10000mm
+	 */
+	public boolean equals(Object obj) {
+		return compareTo((Length)obj) == 0;
 	}
 
 	@Override
 	public int compareTo(Length o) {
-		float sizeO = o.convert(unit).amount;
-		return Float.compare(amount, sizeO);
+		
+		return Float.compare(amount, o.convert(unit).amount);
 	}
-	
-	public Length convert(LengthUnit lengthUnit) {
-		float k = unit.value / lengthUnit.value;
-		Length conv = new Length(amount * k, lengthUnit);		
-		return conv;
+	/**
+	 * 
+	 * @param unit
+	 * @return new Length object with a given LengthUnit
+	 * convert(LengthUnit.M) returns Length in meters 
+	 */
+	public Length convert(LengthUnit unit) {
+		
+		return new Length(amount * this.unit.getValue() / unit.getValue(), unit);
 	}
-	
-	public LengthUnit getUnit() {
-		return unit;
+	@Override
+	/**
+	 * returns string with amount and length unit pinned to amount with no space
+	 * Example: 20.0M (string expression of Length object containing 20 meters)
+	 */
+	public String toString() {
+		String amountStr = Float.toString(amount);
+		return amountStr + unit.toString();
 	}
-	
+
 	public float getAmount() {
 		return amount;
 	}
 
+	public LengthUnit getUnit() {
+		return unit;
+	}
+	
+	
 }

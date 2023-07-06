@@ -5,7 +5,6 @@ public enum DayOfWeek implements DaysOperations{
 @Override
 public Enum<?> plusDays(int days) {
 	DayOfWeek res = null;
-	values();
 	if (days < 0) {
 		res = (DayOfWeek) minusDays(-days);
 	} else {

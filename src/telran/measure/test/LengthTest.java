@@ -1,15 +1,16 @@
 package telran.measure.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import telran.measure.*;
 
 class LengthTest {
-	Length length1 = new Length(1, LengthUnit.KM);
-	Length length2 = new Length(500, LengthUnit.M);
-	Length l3 = new Length(50000, LengthUnit.CM);
-
+Length length1 = new Length(1, LengthUnit.KM);
+Length length2 = new Length(500, LengthUnit.M);
+Length l3 = new Length(50000, LengthUnit.CM);
 	@BeforeEach
 	void setUp() throws Exception {
 	}
@@ -38,7 +39,6 @@ class LengthTest {
 	void testToString() {
 		assertEquals("500.0M", length2.toString());
 	}
-
 	@Test
 	void testBetween() {
 		Length l = LengthUnit.M.between(length2, length1);
